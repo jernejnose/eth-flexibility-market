@@ -30,7 +30,7 @@ contract BcMarket {
         uint idPonudbe,
         uint zacetek,
         uint konec,
-        address ponudnik,
+        address indexed ponudnik,
         uint8 status,
         uint moc // moc fleksibilnosti v kW
         );
@@ -38,7 +38,7 @@ contract BcMarket {
     
     event ponudbaKupljena (
         uint idPonudbe,
-        address ponudnik,
+        address indexed ponudnik,
         uint zacetek,
         uint konec,
         uint moc
@@ -50,7 +50,7 @@ contract BcMarket {
         // ponudba se mora zaceti v prihodnosti
         require(zacetek > block.timestamp, "zacetek mora biti v prihodnosti!");
         // ponudba se ne sme koncati pred zacetkom
-        require(konec > zacetek, "a");
+        require(konec > zacetek, "Trajanje mora biti vecje od 0");
         uint idPonudbe = idGenerator.current();
         // ustvrimo novo ponudbo in jo dodamo na seznam
         seznamPonudb[idPonudbe] = Ponudba(payable(msg.sender), cena, zacetek, konec, 0, 0, idPonudbe, payable(address(0)), moc);
